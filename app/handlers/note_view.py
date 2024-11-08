@@ -9,7 +9,8 @@ cursor = conn.cursor()
 
 @router.message(F.text == "Посмотреть все заметки")
 async def view_note(message: Message):
-    cursor.execute("SELECT id, title, description, is_remind, remind_at FROM Note")
+    user_id = message.from_user.id  # Получаем ID текущего пользователя
+    cursor.execute("SELECT id, title, description, is_remind, remind_at FROM Note WHERE user_id = ?", (user_id,))
     notes = cursor.fetchall()
 
     if notes:

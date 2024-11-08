@@ -2,6 +2,7 @@
 from aiogram import Router
 from aiogram.types import Message
 from aiogram.filters import Command, CommandObject
+import app.keyboard as kb
 import sqlite3
 
 router = Router()
@@ -34,6 +35,6 @@ async def activate_key(message: Message, command: CommandObject):
             # Обновляем статус и сохраняем user_id
             cursor.execute("UPDATE Key SET status = 'active', user_id = ? WHERE id = ?", (user_id, key_id))
             conn.commit()
-            await message.answer("Ключ успешно активирован! Теперь вам доступен весь функционал бота.")
+            await message.answer("Ключ успешно активирован! Теперь вам доступен весь функционал бота.",  reply_markup=kb.keyboard_reply)
 
     conn.close()
